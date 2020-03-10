@@ -2,6 +2,26 @@ from enum import Enum
 
 
 class Language(Enum):
+    """All SCP official languages.
+
+    Available languages are:
+        * EN
+        * RU
+        * KO
+        * CN
+        * FR
+        * PL
+        * ES
+        * TH
+        * JP
+        * DE
+        * IT
+        * UA
+        * PT
+        * BR
+        * CZ
+    """
+
     EN = "EN"
     RU = "RU"
     KO = "KO"

@@ -3,24 +3,19 @@ from datetime import datetime
 
 
 class Article(ABC):
-    """Represents any Article on Wikidot.
+    """Represents any article on Wikidot.
 
-    Attributes:
-        id (int): The article ID.
-        rating (int): The article's rating.
-        url (str): The article's URL.
-        tags (str[]): The article's tags.
-        poster (str): The user who first posted the article.
-        page_version (int): The number of changes the page went through.
-        last_change (date): The day the page was last changed.
+    **Attributes**
+        id :class:`int` — The article ID.
+        rating :class:`int` — The article's rating.
+        url :class:`str` — The article's URL.
+        tags :class:`str[]` — The article's tags.
+        poster :class:`str` — The user who first posted the article.
+        page_version :class:`int` — The number of changes the page went through.
+        last_change :class:`datetime` — The day the page was last changed.
     """
 
     def __init__(self, data):
-        """Parses the raw values from the data.
-
-        Args:
-            data (dict): The raw data from Wikidot.
-        """
         self.id = int(data["id"])
         self.url = data["url"]
         self.tags = data["tags"]
@@ -40,6 +35,11 @@ class Article(ABC):
                 self.rating = int(rating[1:])
 
     def toJson(self):
+        """Turns the data into a dictionary.
+
+        **Returns**
+            json :class:`dict` — A dictionary containing all of the article's data.
+        """
         return {
             "id": self.id,
             "rating": self.rating,

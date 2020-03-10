@@ -2,6 +2,29 @@ from enum import Enum
 
 
 class Branch(Enum):
+    """All SCP official branches.
+
+    Each variable is set to the branch's link.
+
+    Available branches are:
+        * INT
+        * EN
+        * RU
+        * KO
+        * CN
+        * FR
+        * PL
+        * ES
+        * TH
+        * JP
+        * DE
+        * IT
+        * UA
+        * PT
+        * BR
+        * CZ
+    """
+
     INT = "http://scp-int.wikidot.com/"
     EN = "http://www.scp-wiki.net/"
     RU = "http://scp-ru.wikidot.com/"

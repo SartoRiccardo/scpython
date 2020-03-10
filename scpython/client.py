@@ -10,32 +10,28 @@ import re
 
 
 class Client:
-    """
-    A client to communicate with Wikidot.
+    """A connection to interact with Wikidot.
 
-    Attributes:
-        __token (str): The user's identity.
-        __pool: The pool to make requests with.
+    **Arguments**
+        wikidot_token7 :class:`str` — The user's identity.
     """
 
     __AJAX_CONNECTOR = "/ajax-module-connector.php"
 
     def __init__(self, wikidot_token7):
-        """Registers the token.
-
-        Args:
-            wikidot_token7 (str): The user's Wikidot token.
-        """
         self.__token = wikidot_token7
         self.__pool = urllib3.PoolManager()
 
     def getScpArticle(self, code, branch=None, language=None):
-        """Gets an SCP from a certain wiki.
+        """Gets the requested SCP.
 
-        Args:
-            code (str): The SCP's code.
-            branch (scpython.options.Branch): The SCP's original branch.
-            language (scpython.options.Language): The language to return the SCP in.
+        **Arguments**
+            code :class:`str` — The SCP's full code (``"SCP-XXXX-BRANCH"``).
+            branch :class:`Branch` — In case the Client cannot determine which branch the SCP was originally written in, you can specify it manually.
+            language :class:`Language` —The language to return the SCP in.
+
+        **Returns**
+            article :class:`Article` — The corresponding article.
         """
         branch = branch if branch is not None and isinstance(branch, Branch) \
             else getScpBranch(code)
@@ -143,12 +139,8 @@ class Client:
     class __RequestThread(Thread):
         """A Thread to make requests, to speed up things.
 
-        Attributes:
-            __pool: The pool to make requests with.
-            __method (str): The HTTP Method.
-            __url (str): The URL to send the request to.
-            __request_kwargs (dict): The optional parameters to send to the request.
-            __response: The request response.
+        **Arguments**
+            pool — The pool to make requests with.
         """
 
         def __init__(self, pool):
@@ -162,6 +154,13 @@ class Client:
             self.__response = None
 
         def set_request(self, method, url, **kwargs):
+            """Sets the request parameters.
+
+            **Arguments**
+                method :class:`str` — The HTTP Method.
+                url :class:`str` — The URL to send the request to.
+                request_kwargs :class:`dict` — The optional parameters to send to the request.
+            """
             self.__method = method
             self.__url = url
             self.__request_kwargs = kwargs if kwargs else {}
@@ -176,4 +175,9 @@ class Client:
             self.__response = None
 
         def getResponse(self):
+            """Returns the last call's response.
+
+            **Returns**
+                response :class:`bytes` — The request response.
+            """
             return self.__response
