@@ -23,7 +23,7 @@ class Client:
         self.__token = wikidot_token7
         self.__pool = urllib3.PoolManager()
 
-    def getScpArticle(self, code, branch=None, language=None):
+    def getScpArticle(self, code, **kwargs):
         """Gets the requested SCP.
 
         **Arguments**
@@ -34,15 +34,18 @@ class Client:
         **Returns**
             article :class:`Article` — The corresponding article.
         """
-        branch = branch if branch is not None and isinstance(branch, Branch) \
+        branch = kwargs["branch"] if "branch" in kwargs and isinstance(kwargs["branch"], Branch) \
             else getScpBranch(code)
 
-        if language is None:
+        if "language" not in kwargs or not isinstance(kwargs["language"], Language):
             language = getItemByName(Language, branch.name)
             if branch is Branch.INT:
                 language = Language.EN
+        else:
+            language = kwargs["language"]
 
-        wiki_url = getItemByName(Branch, language.name).value
+        wiki_url = Branch.INT.value if branch is not Branch.EN and language is Language.EN \
+            else getItemByName(Branch, language.name).value
         url = wiki_url + code
 
         response = self.__pool.request(
@@ -65,7 +68,8 @@ class Client:
                 "url": url,
             }
             for var in regex:
-                result = re.search(regex[var], raw_html).group(1)
+                match = re.search(regex[var], raw_html)
+                result = match.group(1) if match else None
                 scp_data[var] = result
 
             raw_tags = re.search(r"<div class=\"page-tags\">\s+<span>\s+(?:<a href=\".+?\">.+?</a>)+", raw_html) \
@@ -76,21 +80,22 @@ class Client:
                 "tags": tags
             }
 
-            req_poster = Client.__RequestThread(self.__pool)
-            req_poster.set_request(
-                "POST",
-                wiki_url + Client.__AJAX_CONNECTOR,
-                headers={"Cookie": f"wikidot_token7={self.__token}"},
-                fields={
-                    "page_id": scp_data["id"],
-                    "moduleName": "history/PageRevisionListModule",
-                    "wikidot_token7": self.__token,
-                    "options": "{\"all\":true}",
-                    "page": int(scp_data["page_version"])+1,
-                    "perpage": "1",
-                }
-            )
-            req_poster.start()
+            if scp_data["page_version"]:
+                req_poster = Client.__RequestThread(self.__pool)
+                req_poster.set_request(
+                    "POST",
+                    wiki_url + Client.__AJAX_CONNECTOR,
+                    headers={"Cookie": f"wikidot_token7={self.__token}"},
+                    fields={
+                        "page_id": scp_data["id"],
+                        "moduleName": "history/PageRevisionListModule",
+                        "wikidot_token7": self.__token,
+                        "options": "{\"all\":true}",
+                        "page": int(scp_data["page_version"])+1,
+                        "perpage": "1",
+                    }
+                )
+                req_poster.start()
 
             req_page_source = Client.__RequestThread(self.__pool)
             req_page_source.set_request(
@@ -105,20 +110,22 @@ class Client:
             )
             req_page_source.start()
 
-            req_poster.join()
+            author = None
+            if scp_data["page_version"]:
+                req_poster.join()
+
+                res_poster = req_poster.getResponse()
+                poster_data = json.loads(res_poster.decode("utf-8"))
+                if poster_data["status"] == "wrong_token7":
+                    raise InvalidToken()
+
+                author = None if not res_poster \
+                    else re.search(
+                        r"<span class=\"printuser .+?\">(?:<a .+?>)?<img .+/>(?:</a>)?(?:<a .+?>)?(.+?)(?:</a>)*</span>",
+                        poster_data["body"]
+                    ).group(1)
+
             req_page_source.join()
-
-            res_poster = req_poster.getResponse()
-            poster_data = json.loads(res_poster.decode("utf-8"))
-            if poster_data["status"] == "wrong_token7":
-                raise InvalidToken()
-
-            author = None if not res_poster \
-                else re.search(
-                    r"<span class=\"printuser .+?\">(?:<a .+?>)?<img .+/>(?:</a>)?(?:<a .+?>)?(.+?)(?:</a>)*</span>",
-                    poster_data["body"]
-                ).group(1)
-
             res_page_source = req_page_source.getResponse()
             page_source = "" if not res_page_source \
                 else json.loads(res_page_source.decode("utf-8"))["body"]

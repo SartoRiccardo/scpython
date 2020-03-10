@@ -19,9 +19,13 @@ class Article(ABC):
         self.id = int(data["id"])
         self.url = data["url"]
         self.tags = data["tags"]
-        self.page_version = int(data["page_version"])
-        self.last_change = data["last_change"] if isinstance(data["last_change"], datetime) \
-            else datetime.strptime(data["last_change"], "%d %b %Y %H:%M")
+        self.page_version = int(data["page_version"]) if data["page_version"] else None
+        if isinstance(data["last_change"], datetime):
+            self.last_change = data["last_change"]
+        elif isinstance(data["last_change"], str):
+            self.last_change = datetime.strptime(data["last_change"], "%d %b %Y %H:%M")
+        else:
+            self.last_change = None
         self.poster = data["poster"]
 
         self.rating = None
@@ -49,4 +53,3 @@ class Article(ABC):
             "page_version": self.page_version,
             "last_change": self.last_change,
         }
-
