@@ -16,8 +16,9 @@ This library can be found with `pip`.
 Once installed, all requests are handled with a `Client` object:
 ```python
 from scpython import Client
+from config import YOUR_TOKEN
 
-conn = Client("YOUR-TOKEN")
+conn = Client(YOUR_TOKEN)
 scp173 = conn.getScpArticle("SCP-173")
 
 print(scp173.page_source)
