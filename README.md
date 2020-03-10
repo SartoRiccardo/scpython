@@ -23,7 +23,7 @@ scp173 = conn.getScpArticle("SCP-173")
 print(scp173.page_source)
 ```
 
-For more information, refer to the [documentation](https://readthedocs.org/projects/scpython/badge/?version=latest)](https://scpython.readthedocs.io/en/latest/?badge=latest)
+For more information, refer to the [documentation](https://scpython.readthedocs.io/en/latest).
 
 ## Credit
 
