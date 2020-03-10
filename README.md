@@ -2,18 +2,18 @@
 
 A package to fetch data from the SCP Foundation Wiki.
 
-* Documentation [![Documentation Status](https://readthedocs.org/projects/scpython/badge/?version=latest)](https://scpython.readthedocs.io/en/latest/?badge=latest): [https://scpython.readthedocs.io/en/latest/](https://scpython.readthedocs.io/en/latest/)
-* Status: [![Build Status](https://travis-ci.org/SartoRiccardo/scpython.svg?branch=master)](https://travis-ci.org/SartoRiccardo/scpython)
+| Resource | Badge |
+| -------- | ----- |
+| Documentation | [![Documentation Status](https://readthedocs.org/projects/scpython/badge/?version=latest)](https://scpython.readthedocs.io/en/latest/?badge=latest) |
+| Status | [![Build Status](https://travis-ci.org/SartoRiccardo/scpython.svg?branch=master)](https://travis-ci.org/SartoRiccardo/scpython) |
 
-## Installation
+## Installation and Usage
 
 This library can be found with `pip`.
 
 `pip install scpython`
 
-## Usage
-
-All requests are handled with a `Client` object:
+Once installed, all requests are handled with a `Client` object:
 ```python
 from scpython import Client
 
