@@ -1,6 +1,7 @@
 import scpython.model.scparticle
 from scpython.options import Branch, Language
 from scpython.util.enum import getScpBranch, getItemByName
+from scpython.exceptions import *
 
 from threading import Thread
 import json
@@ -28,7 +29,7 @@ class Client:
         **Arguments**
             code :class:`str` — The SCP's full code (``"SCP-XXXX-BRANCH"``).
             branch :class:`Branch` — In case the Client cannot determine which branch the SCP was originally written in, you can specify it manually.
-            language :class:`Language` —The language to return the SCP in.
+            language :class:`Language` — The language to return the SCP in.
 
         **Returns**
             article :class:`Article` — The corresponding article.
@@ -41,7 +42,7 @@ class Client:
             if branch is Branch.INT:
                 language = Language.EN
 
-        wiki_url = branch.value
+        wiki_url = getItemByName(Branch, language.name).value
         url = wiki_url + code
 
         response = self.__pool.request(
@@ -110,7 +111,7 @@ class Client:
             res_poster = req_poster.getResponse()
             author = None if not res_poster \
                 else re.search(
-                    r"<a href=\".+?\" onclick=\".+?\" ?>(.+)</a></span></td>",
+                    r"<span class=\"printuser .+?\">(?:<a .+?>)?<img .+/>(?:</a>)?(?:<a .+?>)?(.+)(?:</a>)*</span>",
                     json.loads(res_poster.decode("utf-8"))["body"]
                 ).group(1)
 
@@ -133,6 +134,24 @@ class Client:
             }
 
             return scpython.model.scparticle.ScpArticle(scp_data)
+        elif response.status == 404:
+            if language == branch:
+                raise ScpArticleNotFound(code)
+
+            original_branch = getScpBranch(code)
+            if original_branch is not branch:
+                raise ScpArticleNotFound(code, branch=branch)
+
+            exists_at_all = self.__pool.request(
+                "GET",
+                branch.value + code,
+                headers={"Cookie": f"wikidot_token7={self.__token}"}
+            ).status == 200
+
+            if exists_at_all:
+                raise ScpArticleNotTranslated(code, language)
+            else:
+                raise ScpArticleNotFound(code)
         else:
             raise Exception("Invalid response status")
 
