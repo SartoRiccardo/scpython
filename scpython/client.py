@@ -115,7 +115,7 @@ class Client:
 
             author = None if not res_poster \
                 else re.search(
-                    r"<span class=\"printuser .+?\">(?:<a .+?>)?<img .+/>(?:</a>)?(?:<a .+?>)?(.+)(?:</a>)*</span>",
+                    r"<span class=\"printuser .+?\">(?:<a .+?>)?<img .+/>(?:</a>)?(?:<a .+?>)?(.+?)(?:</a>)*</span>",
                     poster_data["body"]
                 ).group(1)
 
