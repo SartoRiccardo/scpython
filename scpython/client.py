@@ -109,10 +109,14 @@ class Client:
             req_page_source.join()
 
             res_poster = req_poster.getResponse()
+            poster_data = json.loads(res_poster.decode("utf-8"))
+            if poster_data["status"] == "wrong_token7":
+                raise InvalidToken()
+
             author = None if not res_poster \
                 else re.search(
                     r"<span class=\"printuser .+?\">(?:<a .+?>)?<img .+/>(?:</a>)?(?:<a .+?>)?(.+)(?:</a>)*</span>",
-                    json.loads(res_poster.decode("utf-8"))["body"]
+                    poster_data["body"]
                 ).group(1)
 
             res_page_source = req_page_source.getResponse()
