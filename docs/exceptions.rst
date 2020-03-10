@@ -3,10 +3,10 @@
 Exceptions
 ==========
 
-.. autoclass:: ArticleException
+.. autoexception:: ArticleException
 
-.. autoclass:: ScpArticleNotFound
+.. autoexception:: ScpArticleNotFound
 
-.. autoclass:: ScpArticleNotTranslated
+.. autoexception:: ScpArticleNotTranslated
 
-.. autoclass:: InvalidToken
+.. autoexception:: InvalidToken
