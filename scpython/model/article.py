@@ -7,11 +7,17 @@ class Article(ABC):
 
     **Attributes**
         id :class:`int` — The article ID.
+
         rating :class:`int` — The article's rating.
+
         url :class:`str` — The article's URL.
+
         tags :class:`str[]` — The article's tags.
+
         poster :class:`str` — The user who first posted the article.
+
         page_version :class:`int` — The number of changes the page went through.
+
         last_change :class:`datetime` — The day the page was last changed.
     """
 

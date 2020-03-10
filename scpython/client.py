@@ -28,7 +28,9 @@ class Client:
 
         **Arguments**
             code :class:`str` — The SCP's full code (``"SCP-XXXX-BRANCH"``).
+
             branch :class:`Branch` — In case the Client cannot determine which branch the SCP was originally written in, you can specify it manually.
+
             language :class:`Language` — The language to return the SCP in.
 
         **Returns**
@@ -36,7 +38,9 @@ class Client:
 
         **Throws**
             :class:`InvalidToken` — The wikidot token7 you have provided is invalid.
+
             :class:`ScpArticleNotFound` — The SCP article you searched does not exist.
+
             :class:`ScpArticleNotTranslated` — The SCP article you searched exists, but it's not translated in the language you're looking for.
         """
         branch = kwargs["branch"] if "branch" in kwargs and isinstance(kwargs["branch"], Branch) \
@@ -193,7 +197,9 @@ class Client:
 
             **Arguments**
                 method :class:`str` — The HTTP Method.
+
                 url :class:`str` — The URL to send the request to.
+
                 request_kwargs :class:`dict` — The optional parameters to send to the request.
             """
             self.__method = method

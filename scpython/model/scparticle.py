@@ -8,10 +8,15 @@ class ScpArticle(Article):
 
     **Attributes**
         page_source :class:`str` — The SCP's text.
+
         number :class:`int` — The SCP's number.
+
         branch :class:`Branch` — The SCP's original branch.
+
         language :class:`Language` — The fetched SCP's language.
+
         is_joke :class:`boolean` — Whether the SCP has a -J flag.
+
         full_code :class:`str` — The SCP's full code (``"SCP-XXXX-LANG-J"``).
     """
 
