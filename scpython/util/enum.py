@@ -1,4 +1,4 @@
-from options import Branch, Language
+from scpython.options import Branch, Language
 import re
 
 

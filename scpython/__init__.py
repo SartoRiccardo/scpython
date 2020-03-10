@@ -1,2 +1,2 @@
-from client import Client
-from options import *
+from scpython.client import Client
+from scpython.options import *

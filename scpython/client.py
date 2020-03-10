@@ -1,6 +1,7 @@
-import model.scparticle
-from options import Branch, Language
-from util.enum import getScpBranch, getItemByName
+import scpython.model.scparticle
+from scpython.options import Branch, Language
+from scpython.util.enum import getScpBranch, getItemByName
+
 from threading import Thread
 import json
 import html
@@ -135,7 +136,7 @@ class Client:
                 "language": language
             }
 
-            return model.scparticle.ScpArticle(scp_data)
+            return scpython.model.scparticle.ScpArticle(scp_data)
         else:
             raise Exception("Invalid response status")
 

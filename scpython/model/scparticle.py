@@ -1,5 +1,5 @@
-from model.article import Article
-from options import Branch, Language
+from scpython.model.article import Article
+from scpython.options import Branch, Language
 import re
 
 

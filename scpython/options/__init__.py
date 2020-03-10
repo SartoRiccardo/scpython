@@ -1,2 +1,2 @@
-from options.branch import Branch
-from options.language import Language
+from scpython.options.branch import Branch
+from scpython.options.language import Language

@@ -1,2 +1,2 @@
-from model.article import Article
-from model.scparticle import ScpArticle
+from scpython.model.article import Article
+from scpython.model.scparticle import ScpArticle
