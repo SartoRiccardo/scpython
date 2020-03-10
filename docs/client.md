@@ -42,6 +42,8 @@ The client used to communicate with Wikidot.
 **Arguments:**
 + *access_token* `str`: A valid wikidot token7.
 
+----
+
 #### getScpArticle(code, branch=None, language=None)
 
 Gets the requested SCP.

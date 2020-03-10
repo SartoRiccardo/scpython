@@ -9,7 +9,8 @@ The access token is used to make requests in your account's behalf, and it is ne
 5. Click the *ajax-module-connector.php* row that should've appeared.
 6. In the tab *Headers*, scroll down until you find the section *Form Data*.
 7. Copy the value of the `wikidot_token7` row.
-![](./img/form_data.png)
+
+![token](./img/form_data.png)
 
 **WARNING: DO NOT SHARE YOUR TOKEN WITH ANYONE**. Do not post your access token anywhere.
 
