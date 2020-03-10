@@ -1,12 +1,12 @@
 .. py:currentmodule:: scpython.exceptions
 
-Objects
-=======
+Exceptions
+==========
 
 .. autoclass:: ArticleException
 
 .. autoclass:: ScpArticleNotFound
-    :members:
 
 .. autoclass:: ScpArticleNotTranslated
-    :members:
+
+.. autoclass:: InvalidToken

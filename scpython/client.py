@@ -33,6 +33,11 @@ class Client:
 
         **Returns**
             article :class:`Article` — The corresponding article.
+
+        **Throws**
+            :class:`InvalidToken` — The wikidot token7 you have provided is invalid.
+            :class:`ScpArticleNotFound` — The SCP article you searched does not exist.
+            :class:`ScpArticleNotTranslated` — The SCP article you searched exists, but it's not translated in the language you're looking for.
         """
         branch = kwargs["branch"] if "branch" in kwargs and isinstance(kwargs["branch"], Branch) \
             else getScpBranch(code)
