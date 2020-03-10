@@ -7,6 +7,7 @@ SCPython Documentation
    access_token_howto
    client
    models
+   exceptions
 
 
 A python to fetch data from the SCP Foundation Wiki.
