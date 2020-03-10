@@ -1,0 +1,10 @@
+site_name: 'SCPython'
+repo_url: 'https://github.com/SartoRiccardo/scpython'
+
+nav:
+    - 'Get an Access Token': 'access_token_howto.md'
+    - 'Reference': 'client.md'
+    - 'Data Models': 'models.md'
+
+theme:
+    name: readthedocs
