@@ -43,6 +43,7 @@ class Client:
 
             :class:`ScpArticleNotTranslated` — The SCP article you searched exists, but it's not translated in the language you're looking for.
         """
+        code = code.upper()
         branch = kwargs["branch"] if "branch" in kwargs and isinstance(kwargs["branch"], Branch) \
             else getScpBranch(code)
 

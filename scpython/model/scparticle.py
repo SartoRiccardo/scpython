@@ -9,7 +9,7 @@ class ScpArticle(Article):
     **Attributes**
         page_source :class:`str` — The SCP's text.
 
-        number :class:`int` — The SCP's number.
+        number :class:`str` — The SCP's number. Also works for Joke SCPs.
 
         branch :class:`Branch` — The SCP's original branch.
 
@@ -26,7 +26,7 @@ class ScpArticle(Article):
         self.page_source = data["page_source"]
         self.is_joke = "joke" in self.tags
         self.full_code = data["full_code"]
-        self.number = int(re.search(r"(\d+)", self.full_code).group(1))
+        self.number = re.search(r"SCP-([^-]+)", self.full_code).group(1)
         self.language = data["language"]
         self.branch = data["branch"]
 

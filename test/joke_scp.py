@@ -6,6 +6,6 @@ TOKEN = os.environ['TOKEN']
 def test_get_scp():
     conn = Client(TOKEN)
     try:
-        scp049j = conn.getScpArticle("SCP-049-J")
+        scp____j = conn.getScpArticle("SCP-____-J")
     except ArticleException:
         pass
