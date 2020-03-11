@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="scpython",
-    version="0.2.0",
+    version="0.1.0",
     author="TheSartorsss",
     description="A package to fetch data from the SCP Foundation",
     long_description=long_description,
